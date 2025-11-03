@@ -44,4 +44,23 @@ def detecting_outliers(a_values,g_values,m_values,k=3,threshlod=2) -> aplica o k
 def count_outliers_oer_activity(combine_matrix,activity_labels,activity_names,k=3,threshlod=2) -> conta e dá print ao número de 
                                                                                     outliers para cada atividade
 
-X -> Has the segments with the features extrated (3512,139)
+combined_data -> (472683,11) tem os dados de todos os elementos dos sensores para todas as atividades e sensores sem ser módulo     
+                 (ID,ax,ay,az,gx,gy,gz,mx,my,mz,act_label)
+
+############# VER AS FEATURES QUE EXTRAI #############
+
+extract_features_from_window_9d(window,fs) -> para extrair as features (estatísticas e físicas) por janela com frequência de amostragem de 50
+                    
+segment_data_combined(combine_matrix,fs=50,win_time=5,overlap=0.5) -> como o fs=50 e o win_time=5, tenho 250 amostras por janela (50*5)
+                                                                    e como o overlap é 0.5 cada passo vai ser de 125 em 125 amostras            
+                                                                    sobrepondo-se a metade da anterior                           
+
+segments -> (3512,3) em que tem um array de arrays com várias features, a label da atividade e o ID do participante
+
+X -> (3512,139) tem os segmentos com as features todas extraídas 
+
+y -> (3512,1) tem as labels correspondentes aos segmentos em X 
+
+participants -> tem os IDs dos participantes correspondentes em X 
+
+
