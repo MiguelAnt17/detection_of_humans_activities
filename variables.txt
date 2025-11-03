@@ -1,1 +1,47 @@
+BASE_PATH -> caminho original do dataset para qualquer máquina
+
+def load_data(participant_id,device_id,base_path) -> faz download de cada um dos csv de cada individuo só para o device especificado
+
+individuals -> 15 arrays para cada indivíduo com as 12 variáveis 
+            cada um dos arrays tem tamanhos diferents (indivíduos diferentes geram um número de dados diferentes)
+
+activities -> dicionário que guarda os dados de cada atividade (1,2,3,4) e cada atividade tem um número de dados diferentes
+            guarda por módulos os vetores (x,y,z)
+
+accelerometer_activity/gyroscope_activity/magnetometer_activity -> (4,162125) com os dados dos sensores para cada atividade
+                toma o valor 162125 porque é o maior tamanho de todas as atividades, pelo que senão tiver fica como missing value
+
+accelerometer_activity_sorted/gyroscope_activity_sorted/magnetometer_activity_sorted -> a mesma coisa que as variáveis anteriores
+                                    mas é ordenado para facilitar a aplicalção do IQR
+
+len_accelerometer/len_gyroscope/len_magnetometer -> tamhanhos dos arrays dos dados dos sensores parao ser usado no IQR
+
+Q1_acc e Q3_acc/Q1_gyr e Q3_gyr/Q1_mag e Q3_mag -> quartil 25 e 75 para cada atividade em cada sensor (4,1) seis vezes 
+
+IQR_acc/IQR_gyr/IQR_mag -> calcula a amplitude interquartil para cada atividade (4,1) três vezes
+
+lower_acc e upper_acc/lower_gyr e upper_gyr/lower_mag e upper_mag -> calcula os limites superior e inferior para o IQR (4,1) três vezes
+
+outliers_acc/outliers_gyr/outliers_mag -> (4,K) tem de outliers de cada atividade para cada sensor de acordo com o IQR
+
+nr_outliers_acc/nr_outliers_gyr/nr_outliers_mag -> (4,1) número total de outliers de cada atividade para cada sensor
+
+density_accelerometer/density_gyroscope/density_magnetometer -> (4,1) é a densidade de outliers para cada atividade para cada sensor
+
+def zscore_sensor(sensore_data,k=3) -> função do zscore que devolve os valores do zscore, os outliers e o seu número total
+
+z_acc,out_acc,nr_out_acc/z_gyr,out_gyr,nr_out_gyr/z_mag,out_mag,nr_out_mag -> (4,162125),(4,N),(4,N) é o que a função devolve mas
+                                            para cada atividade e cada sensor
+
+combined_data_module -> (794257,4) tem os dados de cada sensor, em módulo, e de cada atividade todos juntos numa matriz
+                        (|a|,|g|,|m|,act_label) e serve para facilitar a implementação do kmeans
+
+def kmeans(data,k=3,mac_iter=100) -> aplica o algoritmo kmeans e retorna os centroids, labels e final distances
+
+def detecting_outliers(a_values,g_values,m_values,k=3,threshlod=2) -> aplica o kmeas aos três sensores e retorna os dados, os centroides
+                                                                      as labels e os índices dos outliers
+
+def count_outliers_oer_activity(combine_matrix,activity_labels,activity_names,k=3,threshlod=2) -> conta e dá print ao número de 
+                                                                                    outliers para cada atividade
+
 X -> Has the segments with the features extrated (3512,139)
