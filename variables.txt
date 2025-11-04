@@ -118,3 +118,6 @@ merged_full_data -> (4576,141)
 
 
 metrics = compute_classification_metrics(y_test, y_pred)
+
+9 canais * 14 features = 126 
+13 fisicas
