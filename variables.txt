@@ -63,4 +63,58 @@ y -> (3512,1) tem as labels correspondentes aos segmentos em X
 
 participants -> tem os IDs dos participantes correspondentes em X 
 
+X_zscore -> (3512,139) tem os valores dos segmentos com as features em X mas com o zscore aplicado para facilitar a aplicação da participant_id
 
+def pca(data,n_components) -> calcula a pca para X_zscore para reduzir a dimensionalidade e retorna os dados transformados nas projeções dados  
+                              dos eixos das principais componentes, as componentes principais (eigenvectors) e os eignevalues 
+
+X_pca -> (3512,3) em que tem apenas as três principais componentes, porque selecionei só essas 
+
+principal_components -> (139,3) tem as três componentes principais de cada feature
+
+eigenvalues -> (139,1) são os eignevalues para as 139 features 
+
+sorted_indices -> (139,1) tem os índices ordenados do array eigenvalues
+
+eignevalues_sorted -> (139,1) tem os elementos de eignevalues ordenados
+
+explained_variance_ratio -> (139,1) tem a variância, em percentagem, de cada eigenvalue
+
+single_instant_scale -> (139,1) tem os valores de um instante com o zscore para as 139 features (escolho um dos 3512)
+
+data_mean -> (139,1) calcula a média para cada feature dos dados todos para pode fazer para o meu instante
+
+single_instant_centered -> (139,1) tem os valores de um instante centrados (para as 139 features)
+
+compressed_features_manual -> (3,1) tem os valores das projecções do instante para cada uma das principais componentes
+
+def fisher_score(X,y) -> calcula o fisher score de cada feature para as quatro classes 
+
+fs_scores -> (139,1) guarda os fisher scores para as 139 features 
+
+df_fisher -> (139,2) que tem as features e o seu fisher score ordenados (maior->menor)
+
+def relieF(X,y,max_iter,k) -> calcula os relieF scores de cada feature para as quatro classes 
+
+df_relief -> (139,2) guarda os relieF scores para as 139 features 
+
+X_selected_features -> (3512,10) tem os relieF scores para as 10 features 
+
+X_zscore_participants -> (3512,140) dados de todos os segmentos mas com uma coluna para os IDs 
+
+def smote(X,y,target_class,n_new,k=5,random_state) -> aplica o smote a uma dada classe minoritária
+
+counts -> (4,1) tem as contagens de linhas para cada classe
+
+max_counts -> tem o valor de amostras da classe maioritária
+
+X_synthetic_all -> (n_new,140) tem as amostras sintéticas geradas pelo smote para essa classe
+
+y_synthetic_all -> (n_new,1) tem as labels das atividades 
+
+X_synthetic3_smote -> (3,140) gera as três amostras para a atividade quatro do participante 3
+
+merged_full_data -> (4576,141)
+
+
+metrics = compute_classification_metrics(y_test, y_pred)
